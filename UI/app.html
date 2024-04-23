@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celebrity Classifier</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./dropzone.min.css">
+    <link rel="stylesheet" href="./app.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background color */
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #ffffff; /* White table background */
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6; /* Light gray border */
+        }
+
+        th {
+            background-color: #28a745; /* Green header */
+            color: #ffffff; /* White text */
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2; /* Alternate row color */
+        }
+        .dropzone {
+    border: 2px dashed #28a745; /* Green dashed border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px;
+    text-align: center;
+    background-color: #ffffff; /* White background */
+    transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+.dropzone:hover {
+    border-color: #218838; /* Darker green border on hover */
+}
+
+.dropzone .dz-message {
+    font-size: 16px;
+    color: #495057; /* Dark gray text color */
+}
+
+.dropzone .dz-message span {
+    display: block;
+    margin-top: 10px;
+}
+.dropzone .dz-error-message {
+    display: none;
+}
+.dropzone.dz-started .dz-message {
+    display: none; /* Hide message when files are being dragged or uploaded */
+}
+
+    </style>
+</head>
+
+<body style="background-color:black">
+
+<div class="container" style="height:100px; margin-top:80px;">
+    <h2 class="text-uppercase card-title" style="color:white;text-align: center;">Female Celebrity Classifier</h2>
+</div>
+
+    <div class="container" style="background-color:black">
+        <div class="row" >
+
+             <div class="col card-wrapper" data-player="alia_bhatt">
+                    <div class="card border-0" style="background-color:black">
+                        <div class="position-relative custom-square-image overflow-hidden mx-auto">
+                            <img class="w-100 h-100" src="./images/Alia_Bhatt.jpg" alt="Card image cap">
+                        </div>
+                        <div class="card-body text-center mt-4">
+                            <h6 class="text-uppercase card-title" style="color:white;">Alia Bhatt</h6>
+                        </div>
+                    </div>
+            </div>
+        <div class="col card-wrapper" data-player="aishwarya_rai" >
+                <div class="card border-0" style="background-color:black">
+                    <div class="position-relative custom-square-image overflow-hidden mx-auto">
+                        <img class="w-100 h-100" src="./images/Aishwarya_Rai.jpg" alt="Card image cap">
+                    </div>
+                    <div class="card-body text-center mt-4">
+                        <h6 class="text-uppercase card-title" style="color:white;" >Aishwarya Rai</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col card-wrapper" data-player="anushka_sharma">
+                    <div class="card border-0" style="background-color:black">
+                        <div class="position-relative custom-square-image overflow-hidden mx-auto">
+                            <img class="w-100 h-100" src="./images/Anushka_Sharma.jpg" alt="Card image cap">
+                        </div>
+                        <div class="card-body text-center mt-4">
+                            <h6 class="text-uppercase card-title" style="color:white;">Anushka Sharma</h6>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="col card-wrapper" data-player="deepika_padukone">
+                <div class="card border-0" style="background-color:black">
+                    <div class="position-relative custom-square-image overflow-hidden mx-auto">
+                        <img class="w-100 h-100" src="./images/Deepika_Padukone.jpg" alt="Card image cap">
+                    </div>
+                    <div class="card-body text-center mt-4">
+                        <h6 class="text-uppercase card-title" style="color:white;">Deepika Padukone</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col card-wrapper" data-player="kiara_advani">
+                <div class="card border-0" style="background-color:black">
+                    <div class="position-relative custom-square-image overflow-hidden mx-auto">
+                        <img class="w-100 h-100" src="./images/Kiara_Advani.jpg" alt="Card image cap">
+                    </div>
+                    <div class="card-body text-center mt-4">
+                        <h6 class="text-uppercase card-title" style="color:white;">Kiara Advani</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<div class="container" >
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="row">
+                    <div class="col-12 mx-auto">
+                        <form action="/file-upload" class="dropzone" id="dropzone">
+                            <div class="dz-message needsclick">
+                                <img src="./images/upload.jpg" width="50vw" height="50vw"><br>
+                                <span class="note needsclick">Drop files here or click to upload</span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-3 mx-auto">
+                        <button id="submitBtn" type="button" class="btn btn-success">Classify</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-8 error" id="error" >
+                <p>Can't classify image. Classifier was not able to detect face and two eyes properly</p>
+            </div>
+
+            <div class="col-sm-4" id="resultHolder">
+            </div>
+            <div class="col-sm-4" id="divClassTable">
+                <table id="classTable">
+                        <tr>
+                            <th>Celebrity</th>
+                            <th>Probability Score</th>
+                        </tr>
+                        <tr>
+                            <td>Aishwarya Rai</td>
+                            <td id="score_aishwarya_rai"></td>
+                        </tr>
+                        <tr>
+                            <td>Alia Bhatt</td>
+                            <td id="score_alia_bhatt"></td>
+                        </tr>
+                        <tr>
+                            <td>Anushka Sharma</td>
+                            <td id="score_anushka_sharma"></td>
+                        </tr>
+                        <tr>
+                            <td>Deepika Padukone</td>
+                            <td id="score_deepika_padukone"></td>
+                        </tr>
+                        <tr>
+                            <td>Katrina Kaif</td>
+                            <td id="score_katrina_kaif"></td>
+                        </tr>
+                        <tr>
+                            <td>Kareena Kapoor</td>
+                            <td id="score_kareena_kapoor"></td>
+                        </tr>
+                        <tr>
+                            <td>Kiara Advani</td>
+                            <td id="score_kiara_advani"></td>
+                        </tr>
+                        <tr>
+                            <td>Preeti Zinta</td>
+                            <td id="score_preeti_zinta"></td>
+                        </tr>
+                        <tr>
+                            <td>Priyanka Chopra</td>
+                            <td id="score_priyanka_chopra"></td>
+                        </tr>
+                        <tr>
+                            <td>Shradha Kapoor</td>
+                            <td id="score_shradha_kapoor"></td>
+                        </tr>
+                        <tr>
+                            <td>Shruti Hassan</td>
+                            <td id="score_shruti_hassan"></td>
+                        </tr>
+                        <tr>
+                            <td>Sonam Kapoor</td>
+                            <td id="score_sonam_kapoor"></td>
+                        </tr>
+                </table>
+            </div>
+
+        </div>
+
+</div>
+<!--        New row-->
+        <div class="container" style="margin-top: 80px">
+        <div class="row">
+            <div class="col card-wrapper" data-player="preeti_zinta">
+                <div class="card border-0" style="background-color:black">
+                    <div class="position-relative custom-square-image overflow-hidden mx-auto">
+                        <img class="w-100 h-100" src="./images/Preeti_Zinta.jpg" alt="Card image cap">
+                    </div>
+                    <div class="card-body text-center mt-4">
+                        <h6 class="text-uppercase card-title" style="color:white;">Preeti Zinta</h6>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col card-wrapper" data-player="priyanka_chopra">
+                <div class="card border-0" style="background-color:black">
+                    <div class="position-relative custom-square-image overflow-hidden mx-auto">
+                        <img class="w-100 h-100" src="./images/Priyanka_Chopra.jpg" alt="Card image cap">
+                    </div>
+                    <div class="card-body text-center mt-4">
+                        <h6 class="text-uppercase card-title" style="color:white;">Priyanka Chopra</h6>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col card-wrapper" data-player="shradha_kapoor">
+                <div class="card border-0" style="background-color:black">
+                    <div class="position-relative custom-square-image overflow-hidden mx-auto">
+                        <img class="w-100 h-100" src="./images/Shradha_Kapoor.jpg" alt="Card image cap">
+                    </div>
+                    <div class="card-body text-center mt-4">
+                        <h6 class="text-uppercase card-title" style="color:white;">Shradhha Kapoor</h6>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col card-wrapper" data-player="shruti_hassan">
+                <div class="card border-0" style="background-color:black">
+                    <div class="position-relative custom-square-image overflow-hidden mx-auto">
+                        <img class="w-100 h-100" src="./images/Shruti_Hassan.jpg" alt="Card image cap">
+                    </div>
+                    <div class="card-body text-center mt-4">
+                        <h6 class="text-uppercase card-title" style="color:white;">Shruti Hassan</h6>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col card-wrapper" data-player="sonam_kapoor">
+                <div class="card border-0" style="background-color:black">
+                    <div class="position-relative custom-square-image overflow-hidden mx-auto">
+                        <img class="w-100 h-100" src="./images/Sonam_Kapoor.jpg" alt="Card image cap">
+                    </div>
+                    <div class="card-body text-center mt-4">
+                        <h6 class="text-uppercase card-title" style="color:white;">Sonam Kapoor</h6>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+    </div>
+
+</body>
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="./dropzone.min.js"></script>
+<script src="./app.js"></script>
+</html>
